@@ -5,13 +5,17 @@ public class ListaTarefas extends ClasseGenerica{
     private Date data_tarefa;
     private String descricao_tarefa;
     private String observacao;
+    private Responsavel responsavel;
+    private Prioridade prioridade;
 
     public ListaTarefas() {}
-    public ListaTarefas(Integer id, Date data_tarefa, String descricao_tarefa, String observacao) {
+    public ListaTarefas(Integer id, Date data_tarefa, String descricao_tarefa, String observacao, Responsavel responsavel, Prioridade prioridade) {
         this.id = id;
         this.data_tarefa = data_tarefa;
         this.descricao_tarefa = descricao_tarefa;
         this.observacao = observacao;
+        this.responsavel = responsavel;
+        this.prioridade = prioridade;
     }
 
     public Integer getId() {
@@ -42,5 +46,30 @@ public class ListaTarefas extends ClasseGenerica{
         this.observacao = observacao;
     }
 
+    public Responsavel getResponsavel() {
+        return responsavel;
+    }
+    public void setResponsavel(Responsavel responsavel) {
+        this.responsavel = responsavel;
+    }
+
+    public Prioridade getPrioridade() {
+        return prioridade;
+    }
+    public void setPrioridade(Prioridade prioridade) {
+        this.prioridade = prioridade;
+    }
+
+    public void salvarListaTarefas(ListaTarefas listaTarefas) {}
+
+    public void alterarListaTarefas(ListaTarefas listaTarefas) {}
+
+    public void deletarListaTarefas(ListaTarefas listaTarefas) {}
+
+    public void pesquisarListaTarefas(ListaTarefas listaTarefas) {}
+
+    public void buscarResponsavel(Responsavel responsavel) {}
+
+    public void buscarPrioridade(Prioridade prioridade) {}
 
 }

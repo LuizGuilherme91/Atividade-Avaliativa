@@ -23,4 +23,12 @@ public class Prioridade extends ClasseGenerica {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public void salvarPrioridade(Prioridade prioridade) {}
+
+    public void alterarPrioridade(Prioridade prioridade) {}
+
+    public void deletarPrioridade(Prioridade prioridade) {}
+
+    public void pesquisarPrioridade(Prioridade prioridade) {}
 }

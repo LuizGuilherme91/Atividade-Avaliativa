@@ -22,4 +22,11 @@ public class Responsavel extends ClasseGenerica{
         this.nome = nome;
     }
 
+    public void salvarResponsavel(Responsavel responsavel) {}
+
+    public void alterarResponsavel(Responsavel responsavel) {}
+
+    public void deletarResponsavel(Responsavel responsavel) {}
+
+    public void pesquisarResponsavel(Responsavel responsavel) {}
 }
