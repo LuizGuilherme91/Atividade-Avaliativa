@@ -9,5 +9,8 @@ public class App {
         } else {
             System.out.println("Falha ao estabelecer conexão.");
         }
+        
+        TelaPrincipal tela = new TelaPrincipal();
+        tela.setVisible(true);
     }
 }

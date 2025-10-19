@@ -1,3 +1,7 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class Prioridade extends ClasseGenerica {
     private Integer id;
     private String descricao;
@@ -5,8 +9,7 @@ public class Prioridade extends ClasseGenerica {
 
     public Prioridade() {}
 
-    public Prioridade(Integer id, String descricao) {
-        this.id = id;
+    public Prioridade(String descricao) {
         this.descricao = descricao;
     }
 
@@ -24,11 +27,66 @@ public class Prioridade extends ClasseGenerica {
         this.descricao = descricao;
     }
 
-    public void salvarPrioridade(Prioridade prioridade) {}
+    public boolean salvarPrioridade(Prioridade prioridade) {
+        String sql = "INSERT INTO prioridade (descricao) VALUES (?)";
+        try (Connection conn = ConexaoBanco.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, prioridade.getDescricao());
+            stmt.executeUpdate();
+            System.out.println("Prioridade salva com sucesso!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro ao salvar prioridade: " + e.getMessage());
+            return false;
+        }
+    }
 
-    public void alterarPrioridade(Prioridade prioridade) {}
+    public boolean alterarPrioridade(String antigaDescricao, String novaDescricao) {
+        String sql = "UPDATE prioridade SET descricao = ? WHERE descricao = ?";
+        try (Connection conn = ConexaoBanco.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, novaDescricao);
+            stmt.setString(2, antigaDescricao);
+            stmt.executeUpdate();
+            System.out.println("Prioridade alterada com sucesso!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro ao alterar prioridade: " + e.getMessage());
+            return false;
+        }
+    }
 
-    public void deletarPrioridade(Prioridade prioridade) {}
+    public boolean deletarPrioridade(String descricao) {
+        String sql = "DELETE FROM prioridade WHERE descricao = ?";
+        try (Connection conn = ConexaoBanco.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, descricao);
+            stmt.executeUpdate();
+            System.out.println("Prioridade deletada com sucesso!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro ao deletar prioridade: " + e.getMessage());
+            return false;
+        }
+    }
 
-    public void pesquisarPrioridade(Prioridade prioridade) {}
+    public boolean pesquisarPrioridade(String descricao) {
+        String sql = "SELECT * FROM prioridade WHERE descricao = ?";
+        try (Connection conn = ConexaoBanco.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, descricao);
+            var rs = stmt.executeQuery();
+            if (rs.next()) {
+                setDescricao(rs.getString("descricao"));
+                System.out.println("Prioridade encontrada: " + getDescricao());
+                return true;
+            } else {
+                System.out.println("Prioridade não encontrada.");
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao pesquisar prioridade: " + e.getMessage());
+            return false;
+        }
+    }
 }
