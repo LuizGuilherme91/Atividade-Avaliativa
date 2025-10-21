@@ -21,22 +21,21 @@ public class TelaListaTarefas extends JFrame {
     private final String FORM_ALTERAR = "FORM_ALTERAR";
     private final String FORM_DELETAR = "FORM_DELETAR";
 
-    // (Você pode adicionar FORM_ALTERAR, FORM_DELETAR, etc.)
-
     public TelaListaTarefas() {
         setTitle("Tela - Lista de Tarefas");
-        setSize(600, 400); // Tamanho um pouco maior
+        // Aumentei a altura para caber os formulários maiores
+        setSize(600, 500); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout()); // Layout principal da janela
+        setLayout(new BorderLayout());
 
-        // --- 1. Menu Bar (Como na imagem) ---
+        // --- 1. Menu Bar ---
         setJMenuBar(criarMenuBar());
 
-        // --- 2. Status Bar (Como na imagem) ---
+        // --- 2. Status Bar ---
         add(criarStatusBar(), BorderLayout.SOUTH);
 
-        // --- 3. Painel Central (Onde a mágica acontece) ---
+        // --- 3. Painel Central ---
         cardLayout = new CardLayout();
         painelPrincipal = new JPanel(cardLayout);
 
@@ -46,9 +45,8 @@ public class TelaListaTarefas extends JFrame {
         painelPrincipal.add(criarFormularioPesquisar(), FORM_PESQUISAR);
         painelPrincipal.add(criarFormularioAlterar(), FORM_ALTERAR);
         painelPrincipal.add(criarFormularioDeletar(), FORM_DELETAR);
-        // (Adicione os outros formulários aqui)
 
-        // Adiciona o painel principal (com CardLayout) ao centro da janela
+        // Adiciona o painel principal ao centro da janela
         add(painelPrincipal, BorderLayout.CENTER);
 
         // Mostra o "cartão" inicial
@@ -56,17 +54,16 @@ public class TelaListaTarefas extends JFrame {
     }
 
     /**
-     * Cria a barra de menu superior
+     * Cria a barra de menu superior.
      */
     private JMenuBar criarMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuCadastros = new JMenu("Cadastros");
         JMenu menuAjuda = new JMenu("Ajuda");
-
-        // Item de menu para voltar à tela inicial de Responsável
+        
         JMenuItem itemListaTarefas = new JMenuItem("Lista de Tarefas");
         itemListaTarefas.addActionListener(e -> cardLayout.show(painelPrincipal, TELA_INICIAL));
-
+        
         menuCadastros.add(itemListaTarefas);
         menuBar.add(menuCadastros);
         menuBar.add(menuAjuda);
@@ -74,7 +71,7 @@ public class TelaListaTarefas extends JFrame {
     }
 
     /**
-     * Cria a barra de status inferior
+     * Cria a barra de status inferior.
      */
     private JLabel criarStatusBar() {
         JLabel statusBar = new JLabel(" Sistema pronto para uso");
@@ -87,17 +84,17 @@ public class TelaListaTarefas extends JFrame {
      */
     private JPanel criarTelaInicial() {
         JPanel painel = new JPanel(new BorderLayout(20, 20));
-        painel.setBackground(new Color(240, 248, 255)); // Fundo azul claro (AliceBlue)
+        painel.setBackground(new Color(240, 248, 255));
         painel.setBorder(new EmptyBorder(20, 40, 40, 40));
 
         // --- Títulos Centrais ---
         JPanel painelTitulos = new JPanel();
-        painelTitulos.setOpaque(false); // Transparente para usar o fundo do painel principal
+        painelTitulos.setOpaque(false);
         painelTitulos.setLayout(new BoxLayout(painelTitulos, BoxLayout.Y_AXIS));
 
         JLabel titulo = new JLabel("Sistema de Tarefas");
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
-        titulo.setForeground(new Color(0, 0, 102)); // Azul escuro
+        titulo.setForeground(new Color(0, 0, 102));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel instrucao = new JLabel("Use as opções abaixo para gerenciar:");
@@ -105,14 +102,13 @@ public class TelaListaTarefas extends JFrame {
         instrucao.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         painelTitulos.add(titulo);
-        painelTitulos.add(Box.createRigidArea(new Dimension(0, 20))); // Espaçamento
+        painelTitulos.add(Box.createRigidArea(new Dimension(0, 20)));
         painelTitulos.add(instrucao);
 
-        // Adiciona os títulos (com espaçamento) ao centro
-        painel.add(Box.createVerticalStrut(20), BorderLayout.NORTH); // Margem superior
+        painel.add(Box.createVerticalStrut(20), BorderLayout.NORTH);
         painel.add(painelTitulos, BorderLayout.CENTER);
 
-        // --- Painel de Botões (Inferior) ---
+        // --- Painel de Botões ---
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         painelBotoes.setOpaque(false);
 
@@ -121,7 +117,7 @@ public class TelaListaTarefas extends JFrame {
         JButton btnDeletar = new JButton("Deletar");
         JButton btnPesquisar = new JButton("Pesquisar");
 
-        // ESTA É A LÓGICA PRINCIPAL: Trocar os "cartões"
+        // Ações para trocar os "cartões"
         btnSalvar.addActionListener(e -> cardLayout.show(painelPrincipal, FORM_SALVAR));
         btnPesquisar.addActionListener(e -> cardLayout.show(painelPrincipal, FORM_PESQUISAR));
         btnAlterar.addActionListener(e -> cardLayout.show(painelPrincipal, FORM_ALTERAR));
@@ -138,142 +134,142 @@ public class TelaListaTarefas extends JFrame {
     }
 
     /**
-     * Cria o "Cartão 2": O formulário para Salvar uma nova prioridade.
+     * Cria o "Cartão 2": O formulário para Salvar uma nova tarefa.
      */
     private JPanel criarFormularioSalvar() {
         JPanel painel = new JPanel(new BorderLayout(10, 10));
         painel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        // Título
         JLabel tituloForm = new JLabel("Cadastrar Nova Tarefa", SwingConstants.CENTER);
         tituloForm.setFont(new Font("Arial", Font.BOLD, 18));
         painel.add(tituloForm, BorderLayout.NORTH);
 
-        // Campos do formulário
+        // --- Campos do formulário ---
         JPanel form = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // Espaçamento
-        gbc.anchor = GridBagConstraints.WEST; // Alinhar labels à esquerda
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+
+        int linha = 0;
 
         // --- Linha 0: Data ---
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.NONE; // Resetar para o label
-        gbc.weightx = 0.0; // Resetar para o label
-        form.add(new JLabel("Data:"), gbc);
-
+        gbc.gridx = 0; gbc.gridy = linha;
+        gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0.0;
+        form.add(new JLabel("Data (yyyy-mm-dd):"), gbc);
         gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Fazer o campo expandir
-        gbc.weightx = 1.0; // Fazer o campo expandir
-        // 'final' é necessário para que o ActionListener possa acessar o campo
+        gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
         final JTextField txtData = new JTextField(20);
         form.add(txtData, gbc);
+        linha++;
 
-        // --- Linha 1: Descrição --- // <-- NOVO
-        gbc.gridx = 0;
-        gbc.gridy = 1; // <-- MUDOU (linha 1)
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.0;
+        // --- Linha 1: Descrição ---
+        gbc.gridx = 0; gbc.gridy = linha;
+        gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0.0;
         form.add(new JLabel("Descrição:"), gbc);
-
         gbc.gridx = 1;
-        gbc.gridy = 1; // <-- MUDOU (linha 1)
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        final JTextField txtDescricao = new JTextField(20); // <-- NOVO
+        gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
+        final JTextField txtDescricao = new JTextField(20);
         form.add(txtDescricao, gbc);
+        linha++;
 
-        // --- Linha 2: Observação --- // <-- NOVO
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.0;
+        // --- Linha 2: Observação ---
+        gbc.gridx = 0; gbc.gridy = linha;
+        gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0.0;
         form.add(new JLabel("Observação:"), gbc);
-
         gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        final JTextField txtObservacao = new JTextField(20); // <-- NOVO
+        gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
+        final JTextField txtObservacao = new JTextField(20);
         form.add(txtObservacao, gbc);
-        
-        // --- Linha 3: Responsável --- // <-- NOVO
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.0;
-        form.add(new JLabel("Responsável:"), gbc);
+        linha++;
 
+        // --- Linha 3: ID Responsável ---
+        gbc.gridx = 0; gbc.gridy = linha;
+        gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0.0;
+        form.add(new JLabel("ID do Responsável:"), gbc); // <-- Corrigido
         gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        final JTextField txtResponsavel = new JTextField(20); // <-- NOVO
-        form.add(txtResponsavel, gbc);
-        
-        // --- Linha 4: Prioridade --- // <-- NOVO
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.0;
-        form.add(new JLabel("Prioridade:"), gbc);
+        gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
+        final JTextField txtResponsavelId = new JTextField(20); // <-- Corrigido
+        form.add(txtResponsavelId, gbc);
+        linha++;
 
+        // --- Linha 4: ID Prioridade ---
+        gbc.gridx = 0; gbc.gridy = linha;
+        gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0.0;
+        form.add(new JLabel("ID da Prioridade:"), gbc); // <-- Corrigido
         gbc.gridx = 1;
-        gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        final JTextField txtPrioridade = new JTextField(20); // <-- NOVO
-        form.add(txtPrioridade, gbc);
-
-        // Adiciona o formulário ao centro (com um "wrapper")
+        gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
+        final JTextField txtPrioridadeId = new JTextField(20); // <-- Corrigido
+        form.add(txtPrioridadeId, gbc);
+        
         JPanel painelCentralWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelCentralWrapper.add(form);
         painel.add(painelCentralWrapper, BorderLayout.CENTER);
 
-        // Botões de ação do formulário
+        // --- Botões de ação ---
         JPanel painelBotoesForm = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnConfirmar = new JButton("Confirmar Cadastro");
         JButton btnVoltar = new JButton("Voltar ao Menu");
-
         painelBotoesForm.add(btnConfirmar);
         painelBotoesForm.add(btnVoltar);
         painel.add(painelBotoesForm, BorderLayout.SOUTH);
 
-        // Ação de Voltar: Sempre volta para a TELA_INICIAL
+        // Ação de Voltar
         btnVoltar.addActionListener(e -> cardLayout.show(painelPrincipal, TELA_INICIAL));
 
-        // Ação de Confirmar: Pega os dados e salva
+        // Ação de Confirmar (Salvar)
         btnConfirmar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String dataStr = txtData.getText();
                 String descricao = txtDescricao.getText();
-                String data = txtData.getText();
                 String observacao = txtObservacao.getText();
-                String responsavel = txtResponsavel.getText();
-                String prioridade = txtPrioridade.getText();
+                String responsavelIdStr = txtResponsavelId.getText();
+                String prioridadeIdStr = txtPrioridadeId.getText();
 
-                if (descricao.isEmpty() || data.isEmpty() || observacao.isEmpty() || responsavel.isEmpty() || prioridade.isEmpty()) {
-                    JOptionPane.showMessageDialog(painel, "Por favor, preencha todos os campos.", "Erro",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
-                    ListaTarefas listaTarefas = new ListaTarefas();
-                    listaTarefas.setDescricao_tarefa(descricao);
-                    listaTarefas.setData_tarefa(Date.valueOf(data));
-                    listaTarefas.setObservacao(observacao);
-                    listaTarefas.setResponsavel(listaTarefas.buscarResponsavel(responsavel));
-                    listaTarefas.setPrioridade(listaTarefas.buscarPrioridade(prioridade));
-                    listaTarefas.salvarListaTarefas(listaTarefas);
+                if (dataStr.isEmpty() || descricao.isEmpty() || responsavelIdStr.isEmpty() || prioridadeIdStr.isEmpty()) {
+                    JOptionPane.showMessageDialog(painel, "Por favor, preencha Data, Descrição, ID Responsável e ID Prioridade.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-                    JOptionPane.showMessageDialog(painel, "Tarefa '" + descricao + "' salva com sucesso!");
-                    txtDescricao.setText(""); // Limpa o campo
-                    txtData.setText(""); // Limpa o campo
-                    txtObservacao.setText(""); // Limpa o campo
-                    txtResponsavel.setText(""); // Limpa o campo
-                    txtPrioridade.setText(""); // Limpa o campo
+                try {
+                    // 1. Converter dados
+                    Date data = Date.valueOf(dataStr); // Pode lançar IllegalArgumentException
+                    Integer respId = Integer.parseInt(responsavelIdStr); // Pode lançar NumberFormatException
+                    Integer prioId = Integer.parseInt(prioridadeIdStr); // Pode lançar NumberFormatException
 
-                    // Opcional: Volta ao menu automaticamente após salvar
-                    cardLayout.show(painelPrincipal, TELA_INICIAL);
+                    // 2. Buscar objetos relacionados
+                    Responsavel resp = Responsavel.pesquisarPorId(respId);
+                    Prioridade prio = Prioridade.pesquisarPorId(prioId);
+
+                    if (resp == null) {
+                        JOptionPane.showMessageDialog(painel, "Responsável com ID " + respId + " não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if (prio == null) {
+                        JOptionPane.showMessageDialog(painel, "Prioridade com ID " + prioId + " não encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    // 3. Criar e salvar a tarefa
+                    ListaTarefas novaTarefa = new ListaTarefas(data, descricao, observacao, resp, prio);
+                    boolean sucesso = novaTarefa.salvar(); // <-- Lógica Corrigida
+
+                    if (sucesso) {
+                        JOptionPane.showMessageDialog(painel, "Tarefa '" + descricao + "' salva com sucesso! ID: " + novaTarefa.getId());
+                        txtData.setText("");
+                        txtDescricao.setText("");
+                        txtObservacao.setText("");
+                        txtResponsavelId.setText("");
+                        txtPrioridadeId.setText("");
+                        cardLayout.show(painelPrincipal, TELA_INICIAL);
+                    } else {
+                        JOptionPane.showMessageDialog(painel, "Erro ao salvar a tarefa.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(painel, "ID inválido. IDs de Responsável e Prioridade devem ser números.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(painel, "Formato de data inválido. Use AAAA-MM-DD.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -282,210 +278,248 @@ public class TelaListaTarefas extends JFrame {
     }
 
     /**
-     * Cria o "Cartão 3": O formulário para Pesquisar prioridades.
-     * (Implementação de exemplo)
+     * Cria o "Cartão 3": O formulário para Pesquisar tarefas (por ID).
      */
     private JPanel criarFormularioPesquisar() {
         JPanel painel = new JPanel(new BorderLayout(10, 10));
         painel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        // Título
         JLabel tituloForm = new JLabel("Pesquisar Tarefa", SwingConstants.CENTER);
         tituloForm.setFont(new Font("Arial", Font.BOLD, 18));
         painel.add(tituloForm, BorderLayout.NORTH);
 
-        // Painel de Busca
+        // --- Painel de Busca (por ID) ---
         JPanel painelBusca = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        painelBusca.add(new JLabel("Buscar por Descrição:"));
-        JTextField txtBusca = new JTextField(25);
+        painelBusca.add(new JLabel("Buscar por ID da Tarefa:")); // <-- Corrigido
+        final JTextField txtBusca = new JTextField(10);
         painelBusca.add(txtBusca);
         JButton btnBuscar = new JButton("Buscar");
         painelBusca.add(btnBuscar);
-
         painel.add(painelBusca, BorderLayout.CENTER);
 
+        // Ação de Buscar
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String descricao = txtBusca.getText();
-                if (descricao.isEmpty()) {
-                    JOptionPane.showMessageDialog(painel, "Por favor, informe a descrição da tarefa.", "Erro",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
-                    ListaTarefas listaTarefas = new ListaTarefas();
-                    boolean sucesso = listaTarefas.pesquisarListaTarefas(descricao);
+                String idTexto = txtBusca.getText();
+                if (idTexto.isEmpty()) {
+                    JOptionPane.showMessageDialog(painel, "Por favor, informe o ID da tarefa.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-                    if (sucesso) {
-                        JOptionPane.showMessageDialog(painel, "Tarefa '" + descricao + "' encontrada com sucesso!");
+                try {
+                    Integer id = Integer.parseInt(idTexto);
+                    ListaTarefas tEncontrada = ListaTarefas.pesquisarPorId(id); // <-- Lógica Corrigida
+
+                    if (tEncontrada != null) {
+                        // Monta uma mensagem com os dados encontrados
+                        String mensagem = String.format(
+                            "Tarefa Encontrada:\n" +
+                            "ID: %d\n" +
+                            "Data: %s\n" +
+                            "Descrição: %s\n" +
+                            "Observação: %s\n" +
+                            "Responsável: %s (ID: %d)\n" +
+                            "Prioridade: %s (ID: %d)",
+                            tEncontrada.getId(),
+                            tEncontrada.getData_tarefa().toString(),
+                            tEncontrada.getDescricao_tarefa(),
+                            tEncontrada.getObservacao(),
+                            tEncontrada.getResponsavel().getNome(),
+                            tEncontrada.getResponsavel().getId(),
+                            tEncontrada.getPrioridade().getDescricao(),
+                            tEncontrada.getPrioridade().getId()
+                        );
+                        JOptionPane.showMessageDialog(painel, mensagem);
                     } else {
-                        JOptionPane.showMessageDialog(painel, "Tarefa '" + descricao + "' não encontrada.", "Erro",
-                                JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(painel, "Tarefa com ID " + id + " não encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
                     }
-                    txtBusca.setText(""); // Limpa o campo
-
-                    // Opcional: Volta ao menu automaticamente após salvar
+                    txtBusca.setText("");
                     cardLayout.show(painelPrincipal, TELA_INICIAL);
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(painel, "ID inválido. Por favor, digite apenas números.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
-        // Botão de Voltar
+        // --- Botão de Voltar ---
         JPanel painelBotoesForm = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnVoltar = new JButton("Voltar ao Menu");
+        painelBotoesForm.add(btnVoltar);
+        painel.add(painelBotoesForm, BorderLayout.SOUTH);
+
+        btnVoltar.addActionListener(e -> cardLayout.show(painelPrincipal, TELA_INICIAL));
+
+        return painel;
+    }
+
+    /**
+     * Cria o "Cartão 4": O formulário para Alterar uma tarefa (por ID).
+     */
+    private JPanel criarFormularioAlterar() {
+        JPanel painel = new JPanel(new BorderLayout(10, 10));
+        painel.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+        JLabel tituloForm = new JLabel("Alterar Tarefa", SwingConstants.CENTER);
+        tituloForm.setFont(new Font("Arial", Font.BOLD, 18));
+        painel.add(tituloForm, BorderLayout.NORTH);
+
+        // --- Formulário (ID + Novos Dados) ---
+        JPanel form = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+
+        int linha = 0;
+
+        // --- Linha 0: ID da Tarefa ---
+        gbc.gridx = 0; gbc.gridy = linha;
+        gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0.0;
+        form.add(new JLabel("ID da Tarefa a Alterar:"), gbc);
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
+        final JTextField txtIdTarefa = new JTextField(10);
+        form.add(txtIdTarefa, gbc);
+        linha++;
+
+        // --- Linha 1: Nova Data ---
+        gbc.gridx = 0; gbc.gridy = linha;
+        gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0.0;
+        form.add(new JLabel("Nova Data (yyyy-mm-dd):"), gbc);
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
+        final JTextField txtNovaData = new JTextField(20);
+        form.add(txtNovaData, gbc);
+        linha++;
+
+        // --- Linha 2: Nova Descrição ---
+        gbc.gridx = 0; gbc.gridy = linha;
+        gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0.0;
+        form.add(new JLabel("Nova Descrição:"), gbc);
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
+        final JTextField txtNovaDescricao = new JTextField(20);
+        form.add(txtNovaDescricao, gbc);
+        linha++;
+
+        // --- Linha 3: Nova Observação ---
+        gbc.gridx = 0; gbc.gridy = linha;
+        gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0.0;
+        form.add(new JLabel("Nova Observação:"), gbc);
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
+        final JTextField txtNovaObservacao = new JTextField(20);
+        form.add(txtNovaObservacao, gbc);
+        linha++;
+
+        // --- Linha 4: Novo ID Responsável ---
+        gbc.gridx = 0; gbc.gridy = linha;
+        gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0.0;
+        form.add(new JLabel("Novo ID Responsável:"), gbc);
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
+        final JTextField txtNovoResponsavelId = new JTextField(20);
+        form.add(txtNovoResponsavelId, gbc);
+        linha++;
+
+        // --- Linha 5: Novo ID Prioridade ---
+        gbc.gridx = 0; gbc.gridy = linha;
+        gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0.0;
+        form.add(new JLabel("Novo ID Prioridade:"), gbc);
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
+        final JTextField txtNovoPrioridadeId = new JTextField(20);
+        form.add(txtNovoPrioridadeId, gbc);
+
+        JPanel painelCentralWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        painelCentralWrapper.add(form);
+        painel.add(painelCentralWrapper, BorderLayout.CENTER);
+
+        // --- Botões de ação ---
+        JPanel painelBotoesForm = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton btnConfirmar = new JButton("Confirmar Alteração");
+        JButton btnVoltar = new JButton("Voltar ao Menu");
+        painelBotoesForm.add(btnConfirmar);
         painelBotoesForm.add(btnVoltar);
         painel.add(painelBotoesForm, BorderLayout.SOUTH);
 
         // Ação de Voltar
         btnVoltar.addActionListener(e -> cardLayout.show(painelPrincipal, TELA_INICIAL));
 
-        return painel;
-    }
-
-    private JPanel criarFormularioAlterar() {
-        JPanel painel = new JPanel(new BorderLayout(10, 10));
-        painel.setBorder(new EmptyBorder(20, 20, 20, 20));
-
-        // Título
-        JLabel tituloForm = new JLabel("Alterar Tarefa", SwingConstants.CENTER);
-        tituloForm.setFont(new Font("Arial", Font.BOLD, 18));
-        painel.add(tituloForm, BorderLayout.NORTH);
-
-        // Campos do formulário
-        JPanel form = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // Espaçamento
-        gbc.anchor = GridBagConstraints.WEST; // Alinhar labels à esquerda
-
-        // --- Linha 0: Data ---
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.NONE; // Resetar para o label
-        gbc.weightx = 0.0; // Resetar para o label
-        form.add(new JLabel("Antiga Descrição:"), gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Fazer o campo expandir
-        gbc.weightx = 1.0; // Fazer o campo expandir
-        // 'final' é necessário para que o ActionListener possa acessar o campo
-        final JTextField txtAntigaDescricao = new JTextField(20);
-        form.add(txtAntigaDescricao, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.NONE; // Resetar para o label
-        gbc.weightx = 0.0; // Resetar para o label
-        form.add(new JLabel("Data:"), gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Fazer o campo expandir
-        gbc.weightx = 1.0; // Fazer o campo expandir
-        // 'final' é necessário para que o ActionListener possa acessar o campo
-        final JTextField txtData = new JTextField(20);
-        form.add(txtData, gbc);
-
-        // --- Linha 1: Descrição --- // <-- NOVO
-        gbc.gridx = 0;
-        gbc.gridy = 2; // <-- MUDOU (linha 1)
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.0;
-        form.add(new JLabel("Descrição:"), gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 2; // <-- MUDOU (linha 1)
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        final JTextField txtNovaDescricao = new JTextField(20); // <-- NOVO
-        form.add(txtNovaDescricao, gbc);
-
-        // --- Linha 2: Observação --- // <-- NOVO
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.0;
-        form.add(new JLabel("Observação:"), gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        final JTextField txtObservacao = new JTextField(20); // <-- NOVO
-        form.add(txtObservacao, gbc);
-        
-        // --- Linha 3: Responsável --- // <-- NOVO
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.0;
-        form.add(new JLabel("Responsável:"), gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        final JTextField txtResponsavel = new JTextField(20); // <-- NOVO
-        form.add(txtResponsavel, gbc);
-        
-        // --- Linha 4: Prioridade --- // <-- NOVO
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.0;
-        form.add(new JLabel("Prioridade:"), gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        final JTextField txtPrioridade = new JTextField(20); // <-- NOVO
-        form.add(txtPrioridade, gbc);
-
-        // Adiciona o formulário ao centro (com um "wrapper")
-        JPanel painelCentralWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        painelCentralWrapper.add(form);
-        painel.add(painelCentralWrapper, BorderLayout.CENTER);
-
-        // Botões de ação do formulário
-        JPanel painelBotoesForm = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton btnConfirmar = new JButton("Confirmar Alteração");
-        JButton btnVoltar = new JButton("Voltar ao Menu");
-
-        painelBotoesForm.add(btnConfirmar);
-        painelBotoesForm.add(btnVoltar);
-        painel.add(painelBotoesForm, BorderLayout.SOUTH);
-
-        // Ação de Voltar: Sempre volta para a TELA_INICIAL
-        btnVoltar.addActionListener(e -> cardLayout.show(painelPrincipal, TELA_INICIAL));
-
-        // Ação de Confirmar: Pega os dados e salva
+        // Ação de Confirmar (Alterar)
         btnConfirmar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String novaDescricao = txtNovaDescricao.getText();
-                String antigaDescricao = txtAntigaDescricao.getText();
-                String data = txtData.getText();
-                String observacao = txtObservacao.getText();
-                String responsavel = txtResponsavel.getText();
-                String prioridade = txtPrioridade.getText();
+                // Coleta todos os dados
+                String idTarefaStr = txtIdTarefa.getText();
+                String dataStr = txtNovaData.getText();
+                String descricao = txtNovaDescricao.getText();
+                String observacao = txtNovaObservacao.getText();
+                String responsavelIdStr = txtNovoResponsavelId.getText();
+                String prioridadeIdStr = txtNovoPrioridadeId.getText();
 
-                if (novaDescricao.isEmpty() || antigaDescricao.isEmpty() || data.isEmpty() || observacao.isEmpty() || responsavel.isEmpty() || prioridade.isEmpty()) {
-                    JOptionPane.showMessageDialog(painel, "Por favor, informe todos os campos.", "Erro",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
-                    ListaTarefas listaTarefas = new ListaTarefas();
-                    listaTarefas.alterarListaTarefas(antigaDescricao, novaDescricao, Date.valueOf(data), observacao, listaTarefas.buscarResponsavel(responsavel), listaTarefas.buscarPrioridade(prioridade));
+                // Validação de preenchimento
+                if (idTarefaStr.isEmpty() || dataStr.isEmpty() || descricao.isEmpty() || responsavelIdStr.isEmpty() || prioridadeIdStr.isEmpty()) {
+                    JOptionPane.showMessageDialog(painel, "Preencha o ID da Tarefa e todos os novos campos obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-                    JOptionPane.showMessageDialog(painel, "Responsável '" + novaDescricao + "' salvo com sucesso!");
-                    txtAntigaDescricao.setText(""); // Limpa o campo
-                    txtNovaDescricao.setText("");
-                    txtData.setText(""); // Limpa o campo
-                    txtObservacao.setText(""); // Limpa o campo
-                    txtResponsavel.setText(""); // Limpa o campo
-                    txtPrioridade.setText(""); // Limpa o campo
+                try {
+                    // 1. Converter e validar IDs e Data
+                    Integer idTarefa = Integer.parseInt(idTarefaStr);
+                    Date data = Date.valueOf(dataStr);
+                    Integer respId = Integer.parseInt(responsavelIdStr);
+                    Integer prioId = Integer.parseInt(prioridadeIdStr);
 
-                    // Opcional: Volta ao menu automaticamente após salvar
-                    cardLayout.show(painelPrincipal, TELA_INICIAL);
+                    // 2. Buscar a tarefa que será alterada
+                    ListaTarefas tParaAlterar = ListaTarefas.pesquisarPorId(idTarefa);
+                    if (tParaAlterar == null) {
+                        JOptionPane.showMessageDialog(painel, "Tarefa com ID " + idTarefa + " não encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    // 3. Buscar os novos objetos relacionados
+                    Responsavel novoResp = Responsavel.pesquisarPorId(respId);
+                    Prioridade novaPrio = Prioridade.pesquisarPorId(prioId);
+
+                    if (novoResp == null) {
+                        JOptionPane.showMessageDialog(painel, "Novo Responsável com ID " + respId + " não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if (novaPrio == null) {
+                        JOptionPane.showMessageDialog(painel, "Nova Prioridade com ID " + prioId + " não encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    // 4. Atualizar o objeto tarefa
+                    tParaAlterar.setData_tarefa(data);
+                    tParaAlterar.setDescricao_tarefa(descricao);
+                    tParaAlterar.setObservacao(observacao);
+                    tParaAlterar.setResponsavel(novoResp);
+                    tParaAlterar.setPrioridade(novaPrio);
+
+                    // 5. Salvar (Alterar) no banco
+                    boolean sucesso = tParaAlterar.alterar(); // <-- Lógica Corrigida
+
+                    if (sucesso) {
+                        JOptionPane.showMessageDialog(painel, "Tarefa ID " + idTarefa + " alterada com sucesso!");
+                        // Limpa todos os campos
+                        txtIdTarefa.setText("");
+                        txtNovaData.setText("");
+                        txtNovaDescricao.setText("");
+                        txtNovaObservacao.setText("");
+                        txtNovoResponsavelId.setText("");
+                        txtNovoPrioridadeId.setText("");
+                        cardLayout.show(painelPrincipal, TELA_INICIAL);
+                    } else {
+                        JOptionPane.showMessageDialog(painel, "Erro ao alterar a tarefa.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(painel, "ID inválido. IDs devem ser números.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(painel, "Formato de data inválido. Use AAAA-MM-DD.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -493,65 +527,81 @@ public class TelaListaTarefas extends JFrame {
         return painel;
     }
 
+    /**
+     * Cria o "Cartão 5": O formulário para Deletar uma tarefa (por ID).
+     */
     private JPanel criarFormularioDeletar() {
         JPanel painel = new JPanel(new BorderLayout(10, 10));
         painel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        // Título
         JLabel tituloForm = new JLabel("Deletar Tarefa", SwingConstants.CENTER);
         tituloForm.setFont(new Font("Arial", Font.BOLD, 18));
         painel.add(tituloForm, BorderLayout.NORTH);
 
-        // Campos do formulário
+        // --- Formulário (por ID) ---
         JPanel form = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // Espaçamento
+        gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        form.add(new JLabel("Descrição:"), gbc);
+        form.add(new JLabel("ID da Tarefa:"), gbc); // <-- Corrigido
 
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0; // Faz o campo de texto expandir
-        JTextField txtDescricao = new JTextField(20);
-        form.add(txtDescricao, gbc);
+        gbc.weightx = 1.0;
+        final JTextField txtId = new JTextField(10); // <-- Corrigido
+        form.add(txtId, gbc);
 
         JPanel painelCentralWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelCentralWrapper.add(form);
         painel.add(painelCentralWrapper, BorderLayout.CENTER);
 
-        // Botões de ação do formulário
+        // --- Botões de ação ---
         JPanel painelBotoesForm = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnConfirmar = new JButton("Deletar");
         JButton btnVoltar = new JButton("Voltar ao Menu");
-
         painelBotoesForm.add(btnConfirmar);
         painelBotoesForm.add(btnVoltar);
         painel.add(painelBotoesForm, BorderLayout.SOUTH);
 
-        // Ação de Voltar: Sempre volta para a TELA_INICIAL
+        // Ação de Voltar
         btnVoltar.addActionListener(e -> cardLayout.show(painelPrincipal, TELA_INICIAL));
 
-        // Ação de Confirmar: Pega os dados e salva
+        // Ação de Confirmar (Deletar)
         btnConfirmar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String descricao = txtDescricao.getText();
-                if (descricao.isEmpty()) {
-                    JOptionPane.showMessageDialog(painel, "Por favor, informe a descrição.", "Erro",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
-                    ListaTarefas listaTarefas = new ListaTarefas();
-                    listaTarefas.deletarListaTarefas(descricao);
-
-                    JOptionPane.showMessageDialog(painel, "Tarefa '" + descricao + "' deletada com sucesso!");
-                    txtDescricao.setText(""); // Limpa o campo
-
-                    // Opcional: Volta ao menu automaticamente após salvar
-                    cardLayout.show(painelPrincipal, TELA_INICIAL);
+                String idTexto = txtId.getText();
+                if (idTexto.isEmpty()) {
+                    JOptionPane.showMessageDialog(painel, "Por favor, informe o ID da tarefa.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                try {
+                    Integer id = Integer.parseInt(idTexto);
+                    
+                    // 1. Pesquisar para confirmar que existe
+                    ListaTarefas tParaDeletar = ListaTarefas.pesquisarPorId(id); // <-- Lógica Corrigida
+                    
+                    if (tParaDeletar == null) {
+                         JOptionPane.showMessageDialog(painel, "Tarefa com ID " + id + " não encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        // 2. Deletar
+                        boolean sucesso = tParaDeletar.deletar(); // <-- Lógica Corrigida
+                        
+                        if (sucesso) {
+                            JOptionPane.showMessageDialog(painel, "Tarefa '" + tParaDeletar.getDescricao_tarefa() + "' (ID: " + id + ") deletada com sucesso!");
+                            txtId.setText("");
+                            cardLayout.show(painelPrincipal, TELA_INICIAL);
+                        } else {
+                            JOptionPane.showMessageDialog(painel, "Erro ao deletar a tarefa.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(painel, "ID inválido. Por favor, digite apenas números.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
