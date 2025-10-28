@@ -182,48 +182,6 @@ public class ListaTarefas extends ClasseGenerica {
             return null;
         }
     }
-
-    /**
-     * Deleta uma tarefa identificada pela descrição.
-     * (Mantido da sua lógica original, mas agora é estático)
-     */
-    public static boolean deletarPorDescricao(String descricaoTarefa) {
-        String sql = "DELETE FROM lista_tarefas WHERE descricao_tarefa = ?";
-        
-        try (Connection conn = ConexaoBanco.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
-            stmt.setString(1, descricaoTarefa);
-            stmt.executeUpdate();
-            
-            System.out.println("Lista de tarefas deletada com sucesso!");
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Erro ao deletar lista de tarefas: " + e.getMessage());
-            return false;
-        }
-    }
-
-    // --- Métodos Estáticos Auxiliares ---
-    // (Corrigidos para usar os métodos estáticos das outras classes)
-
-    /**
-     * Busca um objeto Responsavel pelo NOME.
-     * Agora é estático e usa o método de pesquisa de Responsavel.
-     */
-    public static Responsavel buscarResponsavel(String nome) {
-        // Reutiliza o método que já criamos em Responsavel
-        return Responsavel.pesquisarPorNome(nome);
-    }
-
-    /**
-     * Busca um objeto Prioridade pela DESCRIÇÃO.
-     * Agora é estático e usa o método de pesquisa de Prioridade.
-     */
-    public static Prioridade buscarPrioridade(String descricao) {
-        // Reutiliza o método que já criamos em Prioridade
-        return Prioridade.pesquisarPorDescricao(descricao);
-    }
     
     @Override
     public String toString() {

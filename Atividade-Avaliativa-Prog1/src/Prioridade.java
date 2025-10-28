@@ -48,6 +48,7 @@ public class Prioridade extends ClasseGenerica {
             return this.alterar();
         }
         
+        // Inserir na tabela prioridade a descrição(coluna)
         String sql = "INSERT INTO prioridade (descricao) VALUES (?)";
         
         // Usamos RETURN_GENERATED_KEYS para pegar o ID que o banco criou
@@ -144,72 +145,6 @@ public class Prioridade extends ClasseGenerica {
         } catch (SQLException e) {
             System.out.println("Erro ao pesquisar prioridade: " + e.getMessage());
             return null;
-        }
-    }
-
-    /**
-     * Busca uma prioridade no banco pela DESCRIÇÃO e retorna um NOVO objeto.
-     * Retorna 'null' se não encontrar.
-     */
-    public static Prioridade pesquisarPorDescricao(String descricao) {
-        String sql = "SELECT * FROM prioridade WHERE descricao = ?";
-        try (Connection conn = ConexaoBanco.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
-            stmt.setString(1, descricao);
-            var rs = stmt.executeQuery();
-            
-            if (rs.next()) {
-                // Cria um novo objeto com os dados do banco
-                return new Prioridade(rs.getInt("id"), rs.getString("descricao"));
-            } else {
-                System.out.println("Prioridade não encontrada.");
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao pesquisar prioridade: " + e.getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * Altera a descrição de uma prioridade identificada por outra descrição.
-     * (Mantido da sua lógica original)
-     */
-    public static boolean alterarPorDescricao(String antigaDescricao, String novaDescricao) {
-        String sql = "UPDATE prioridade SET descricao = ? WHERE descricao = ?";
-        try (Connection conn = ConexaoBanco.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
-            stmt.setString(1, novaDescricao);
-            stmt.setString(2, antigaDescricao);
-            stmt.executeUpdate();
-            
-            System.out.println("Prioridade alterada com sucesso!");
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Erro ao alterar prioridade: " + e.getMessage());
-            return false;
-        }
-    }
-
-    /**
-     * Deleta uma prioridade identificada pela descrição.
-     * (Mantido da sua lógica original)
-     */
-    public static boolean deletarPorDescricao(String descricao) {
-        String sql = "DELETE FROM prioridade WHERE descricao = ?";
-        try (Connection conn = ConexaoBanco.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
-            stmt.setString(1, descricao);
-            stmt.executeUpdate();
-            
-            System.out.println("Prioridade deletada com sucesso!");
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Erro ao deletar prioridade: " + e.getMessage());
-            return false;
         }
     }
 

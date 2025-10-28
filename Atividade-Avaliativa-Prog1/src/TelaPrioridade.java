@@ -27,13 +27,10 @@ public class TelaPrioridade extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // --- 1. Menu Bar ---
-        setJMenuBar(criarMenuBar());
-
-        // --- 2. Status Bar ---
+        // --- 1. Status Bar ---
         add(criarStatusBar(), BorderLayout.SOUTH);
 
-        // --- 3. Painel Central ---
+        // --- 2. Painel Central ---
         cardLayout = new CardLayout();
         painelPrincipal = new JPanel(cardLayout);
 
@@ -49,23 +46,6 @@ public class TelaPrioridade extends JFrame {
 
         // Mostra o "cartão" inicial
         cardLayout.show(painelPrincipal, TELA_INICIAL);
-    }
-
-    /**
-     * Cria a barra de menu superior.
-     */
-    private JMenuBar criarMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menuCadastros = new JMenu("Cadastros");
-        JMenu menuAjuda = new JMenu("Ajuda");
-        
-        JMenuItem itemPrioridade = new JMenuItem("Prioridades");
-        itemPrioridade.addActionListener(e -> cardLayout.show(painelPrincipal, TELA_INICIAL));
-        
-        menuCadastros.add(itemPrioridade);
-        menuBar.add(menuCadastros);
-        menuBar.add(menuAjuda);
-        return menuBar;
     }
 
     /**

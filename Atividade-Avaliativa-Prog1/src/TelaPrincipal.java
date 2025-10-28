@@ -111,25 +111,4 @@ public class TelaPrincipal extends JFrame {
         ));
     }
 
-    /**
-     * Método Main: Ponto de entrada da aplicação.
-     */
-    public static void main(String[] args) {
-        // Ativa o anti-aliasing para fontes mais suaves
-        System.setProperty("awt.useSystemAAFontSettings", "on");
-        System.setProperty("swing.aatext", "true");
-
-        try {
-            // Usa o visual do sistema operacional
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            System.err.println("Não foi possível carregar o Look and Feel do sistema.");
-            e.printStackTrace();
-        }
-
-        SwingUtilities.invokeLater(() -> {
-            TelaPrincipal frame = new TelaPrincipal();
-            frame.setVisible(true);
-        });
-    }
 }
